@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meraki Services · Precisión técnica</title>
+<meta name="description" content="Reparación, mantenimiento, modificación y automatización de equipos portuarios, viales, autoelevadores y grúas. Cobertura en todo el país.">
+<meta name="theme-color" content="#0F1A1F">
+<link rel="icon" type="image/png" href="assets/logo-meraki.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F4F3EF;
+    --paper-2: #EAE9E3;
+    --ink: #0F1A1F;
+    --petrol: #10272D;
+    --petrol-2: #163239;
+    --steel: #56656C;
+    --line: #CDD0CA;
+    --grid: #E1E1DA;
+    --brand: #22453D;
+    --amber: #E8A317;
+    --on-dark: #E9ECEA;
+    --on-dark-2: #A9B5B8;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: "IBM Plex Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.025em; line-height: 1.05; }
+  p { margin: 0; text-wrap: pretty; }
+  ul, ol { margin: 0; padding: 0; list-style: none; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .tick { display: inline-flex; align-items: center; gap: 10px; color: var(--steel); }
+  .tick::before { content: ""; width: 18px; height: 1px; background: currentColor; }
+  .tick.on-dark { color: var(--on-dark-2); }
+  .amb { color: var(--amber); }
+  @media (max-width: 760px) { .wrap { padding: 0 18px; } }
+
+  /* ---------- Barra superior y navegación ---------- */
+  .util { background: var(--ink); color: var(--on-dark-2); }
+  .util .wrap { display: flex; justify-content: space-between; gap: 16px; padding-top: 9px; padding-bottom: 9px; flex-wrap: wrap; }
+  .util .mono { font-size: 11px; }
+  .util .live { display: inline-flex; align-items: center; gap: 8px; }
+  .util .live::before { content: ""; width: 6px; height: 6px; background: var(--amber); }
+  @media (max-width: 760px) { .util .hide-m { display: none; } }
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(244,243,239,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; gap: 28px; min-height: 72px; }
+  .nav img { height: 24px; width: auto; }
+  .nav-links { display: flex; gap: 4px; margin-left: auto; }
+  .nav-links a { padding: 10px 14px; font-size: 14.5px; color: var(--steel); position: relative; transition: color .2s; }
+  .nav-links a::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .btn { display: inline-flex; align-items: center; gap: 14px; padding: 15px 22px; border-radius: 2px; font-size: 15px; font-weight: 500; border: 1px solid transparent; transition: background .25s, color .25s, border-color .25s; white-space: nowrap; }
+  .btn .arr { display: inline-block; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+  .btn:hover .arr { transform: translateX(5px); }
+  .btn-ink { background: var(--ink); color: var(--paper); }
+  .btn-ink:hover { background: var(--brand); color: #fff; }
+  .btn-line { border-color: var(--ink); color: var(--ink); }
+  .btn-line:hover { background: var(--ink); color: var(--paper); }
+  .btn-amber { background: var(--amber); color: var(--ink); }
+  .btn-amber:hover { background: #F5B937; color: var(--ink); }
+  .btn-line-d { border-color: rgba(233,236,234,0.4); color: var(--on-dark); }
+  .btn-line-d:hover { background: var(--on-dark); color: var(--ink); }
+  @media (max-width: 960px) { .nav-links { display: none; } .nav .btn { margin-left: auto; } }
+
+  /* ---------- Portada ---------- */
+  .hero { position: relative; padding: 64px 0 72px; border-bottom: 1px solid var(--line); overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr); gap: 56px; align-items: center; }
+  @media (max-width: 1080px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero h1 { font-size: clamp(42px, 5.2vw, 76px); margin-top: 26px; max-width: 14ch; }
+  .hero h1 em { font-style: normal; color: var(--brand); }
+  .hero .lead { margin-top: 26px; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.65; color: var(--steel); max-width: 50ch; }
+  .hero .ctas { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+  .disc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; }
+  .disc span { padding: 8px 12px; border: 1px solid var(--line); color: var(--steel); }
+
+  .sheet { position: relative; border: 1px solid var(--ink); background: var(--paper); }
+  .sheet-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--ink); flex-wrap: wrap; }
+  .seg { display: inline-flex; border: 1px solid var(--ink); }
+  .seg button { background: none; border: 0; padding: 7px 14px; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); transition: background .25s, color .25s; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .canvas { position: relative; aspect-ratio: 880 / 500; overflow: hidden;
+    background-color: var(--paper);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px), linear-gradient(#D6D7CF 1px, transparent 1px), linear-gradient(90deg, #D6D7CF 1px, transparent 1px);
+    background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px; }
+  .canvas svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .bp .d { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.3s cubic-bezier(.45,.05,.25,1); }
+  .bp .d.thin { stroke-width: 0.8; stroke: var(--steel); }
+  .bp .d.dim { stroke: var(--steel); stroke-width: 0.8; stroke-dasharray: 1; }
+  .bp.go .d { stroke-dashoffset: 0; }
+  .bp .lab { opacity: 0; transform: translateY(6px); transition: opacity .6s ease, transform .6s ease; transform-box: fill-box; }
+  .bp.go .lab { opacity: 1; transform: none; }
+  .bp .lab circle { fill: var(--amber); }
+  .bp .lab text { font-family: "IBM Plex Mono", monospace; font-size: 12px; fill: var(--ink); letter-spacing: 0.04em; }
+  .bp .lab .n { font-size: 11px; font-weight: 500; text-anchor: middle; dominant-baseline: central; }
+  .photo { position: absolute; inset: 0; clip-path: inset(0 0 100% 0); transition: clip-path 1.4s cubic-bezier(.7,0,.2,1); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 62%; transform: scale(1.08); transition: transform 2.4s cubic-bezier(.2,.8,.2,1); }
+  .sheet.is-photo .photo { clip-path: inset(0 0 0 0); }
+  .sheet.is-photo .photo img { transform: scale(1); }
+  .scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--amber); box-shadow: 0 0 18px 2px rgba(232,163,23,0.55); opacity: 0; pointer-events: none; }
+  .sheet.scanning .scan { animation: scan 1.4s cubic-bezier(.7,0,.2,1) forwards; }
+  @keyframes scan { 0% { top: 0; opacity: 1; } 92% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+  .tblock { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+  .tblock div { padding: 9px 12px; border-left: 1px solid var(--ink); }
+  .tblock div:first-child { border-left: 0; }
+  .tblock .k { display: block; font-size: 10px; color: var(--steel); }
+  .tblock .v { display: block; margin-top: 3px; font-size: 12.5px; color: var(--ink); text-transform: none; letter-spacing: 0.02em; }
+  @media (max-width: 620px) { .tblock { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tblock div:nth-child(3) { border-left: 0; } .tblock div:nth-child(n+3) { border-top: 1px solid var(--ink); } .bp .lab text { font-size: 15px; } }
+
+  /* ---------- Cifras ---------- */
+  .facts { border-bottom: 1px solid var(--line); }
+  .facts .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .fact { padding: 34px 28px 34px 0; border-right: 1px solid var(--line); }
+  .fact + .fact { padding-left: 28px; }
+  .fact:last-child { border-right: 0; }
+  .fact .big { font-size: clamp(36px, 3.6vw, 52px); font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
+  .fact .big sup { font-size: 0.45em; vertical-align: top; margin-left: 2px; color: var(--brand); }
+  .fact p { margin-top: 12px; font-size: 14.5px; line-height: 1.5; color: var(--steel); max-width: 26ch; }
+  @media (max-width: 860px) { .facts .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); } .fact:nth-child(2) { border-right: 0; } .fact:nth-child(3) { padding-left: 0; } .fact:nth-child(n+3) { border-top: 1px solid var(--line); } }
+
+  /* ---------- Unidades (índice) ---------- */
+  .sec { padding: 120px 0; }
+  .sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 64px; align-items: end; }
+  .sec-head h2 { font-size: clamp(34px, 4vw, 58px); margin-top: 20px; max-width: 18ch; }
+  .sec-head p { font-size: 17px; line-height: 1.65; color: var(--steel); max-width: 48ch; }
+  @media (max-width: 860px) { .sec-head { grid-template-columns: 1fr; } .sec { padding: 84px 0; } }
+  .index { margin-top: 64px; border-top: 1px solid var(--ink); }
+  .row { position: relative; display: grid; grid-template-columns: 90px minmax(0, 1.1fr) minmax(0, 1.4fr) 200px 40px; gap: 24px; align-items: center; padding: 30px 0; border-bottom: 1px solid var(--line); transition: background .35s, padding .45s cubic-bezier(.2,.8,.2,1); }
+  .row:hover { padding-left: 20px; padding-right: 20px; background: var(--ink); color: var(--paper); }
+  .row .num { color: var(--steel); }
+  .row:hover .num { color: var(--amber); }
+  .row h3 { font-size: clamp(26px, 2.6vw, 38px); }
+  .row p { font-size: 15.5px; line-height: 1.55; color: var(--steel); }
+  .row:hover p { color: var(--on-dark-2); }
+  .row .thumb { height: 92px; overflow: hidden; clip-path: inset(0 100% 0 0); transition: clip-path .6s cubic-bezier(.2,.8,.2,1); }
+  .row:hover .thumb { clip-path: inset(0 0 0 0); }
+  .row .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .row .go { font-size: 22px; transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+  .row:hover .go { transform: translateX(6px); color: var(--amber); }
+  @media (max-width: 960px) { .row { grid-template-columns: 56px minmax(0, 1fr) 30px; } .row p, .row .thumb { display: none; } }
+
+  /* ---------- Portuario: relato con scroll ---------- */
+  .story { position: relative; height: 420vh; background: var(--petrol); color: var(--on-dark);
+    --stk: #C9D3D4; --stk2: rgba(201,211,212,0.45); --stk3: rgba(201,211,212,0.28); --fillp: rgba(233,236,234,0.04); --gridc: rgba(233,236,234,0.05); --sep: rgba(233,236,234,0.12); --txt2: var(--on-dark-2); --txt1: var(--on-dark); --key: var(--amber); }
+  .story.ink { background: #0B1418; }
+  .story.light { background: var(--paper-2); color: var(--ink);
+    --stk: #24343A; --stk2: rgba(15,26,31,0.38); --stk3: rgba(15,26,31,0.22); --fillp: rgba(15,26,31,0.035); --gridc: rgba(15,26,31,0.055); --sep: var(--line); --txt2: var(--steel); --txt1: var(--ink); --key: var(--brand); }
+  .stage { position: sticky; top: 0; height: 100vh; min-height: 620px; overflow: hidden; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.3fr); }
+  .stage-grid { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--gridc) 1px, transparent 1px), linear-gradient(90deg, var(--gridc) 1px, transparent 1px); background-size: 40px 40px; }
+  .copy { position: relative; padding: 110px 40px 48px max(40px, calc((100vw - 1400px) / 2 + 40px)); display: flex; flex-direction: column; border-right: 1px solid var(--sep); }
+  .copy .tick { color: var(--txt2); }
+  .copy h2 { font-size: clamp(30px, 3.2vw, 46px); margin-top: 18px; max-width: 16ch; }
+  .steps { position: relative; flex: 1; margin-top: 36px; min-height: 240px; }
+  .step { position: absolute; inset: 0; opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+  .step.on { opacity: 1; transform: none; pointer-events: auto; }
+  .step .k { color: var(--key); }
+  .step h3 { font-size: clamp(24px, 2.2vw, 32px); margin-top: 12px; }
+  .step p { margin-top: 14px; font-size: 16.5px; line-height: 1.65; color: var(--txt2); max-width: 44ch; }
+  .step .ph { margin-top: 24px; width: min(100%, 360px); aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--sep); }
+  .step .ph img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); transition: transform 1.6s cubic-bezier(.2,.8,.2,1); }
+  .step.on .ph img { transform: scale(1); }
+  .rail { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 24px; }
+  .rail span { height: 3px; background: var(--stk3); position: relative; overflow: hidden; }
+  .rail span i { position: absolute; inset: 0; background: var(--amber); transform-origin: left; transform: scaleX(0); }
+  .rail-l { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 10px; color: var(--txt2); }
+  .rail-l span { font-size: 10.5px; }
+  .viz { position: relative; display: flex; align-items: center; justify-content: center; padding: 80px 40px 40px; }
+  .viz svg { width: 100%; height: auto; max-height: 78vh; overflow: visible; }
+  .scene .s { fill: none; stroke: var(--stk); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; transition: stroke .5s, opacity .6s; }
+  .scene .s.t { stroke-width: 1; stroke: var(--stk2); }
+  .scene .f { fill: var(--fillp); transition: fill .5s; }
+  .scene .cont { fill: var(--fillp); stroke: var(--stk2); stroke-width: 1; }
+  .scene .cont-l { stroke: var(--stk3); stroke-width: 1; }
+  .scene .ground, .scene .arc { fill: none; stroke: var(--stk2); stroke-width: 1; stroke-dasharray: 6 6; }
+  .scene .lbl { font-family: "IBM Plex Mono", monospace; font-size: 11px; fill: var(--stk2); letter-spacing: 0.06em; }
+  .scene .lbl.dig { font-size: 15px; fill: var(--amber); }
+  .scene .part { transition: opacity .7s; }
+  .scene .part.ghost { opacity: 0.12; }
+  .scene .part.hot .s { stroke: var(--amber); }
+  .scene .part.hot .f { fill: rgba(232,163,23,0.10); }
+  .scene .part.hot .lbl { fill: var(--amber); }
+  .story.light .scene .part.hot .lbl { fill: #8A5A00; }
+  .scene #box rect.c { fill: rgba(232,163,23,0.14); stroke: var(--amber); stroke-width: 1.5; }
+  .scene #box line { stroke: rgba(232,163,23,0.6); stroke-width: 1; }
+  .scene .wire { stroke-dasharray: 1; stroke-dashoffset: 1; transition: none; }
+  .scene .sig { fill: none; stroke: var(--amber); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 8 14; opacity: 0; transition: opacity .4s; animation: flow 1s linear infinite; }
+  .scene .sig.on { opacity: 1; }
+  .scene .sig.rev { animation-direction: reverse; }
+  @keyframes flow { to { stroke-dashoffset: -22; } }
+  .scene .led { fill: transparent; stroke: var(--stk2); stroke-width: 1; }
+  .scene .led.on { fill: var(--amber); stroke: var(--amber); animation: blink 1.4s steps(2, jump-none) infinite; }
+  @keyframes blink { 50% { opacity: 0.25; } }
+  .scene .bar { fill: var(--amber); opacity: 0.85; }
+  .scene .panel { fill: rgba(16,39,45,0.06); stroke: var(--stk); stroke-width: 1.3; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .scene .sun { fill: var(--amber); }
+  .scene .ray { stroke: var(--amber); stroke-width: 2; stroke-linecap: round; }
+  .scene .tag { opacity: 0; transition: opacity .45s; }
+  .scene .tag.on { opacity: 1; }
+  .scene .tag rect { fill: var(--amber); }
+  .scene .tag text { font-family: "IBM Plex Mono", monospace; font-size: 13px; fill: var(--ink); letter-spacing: 0.04em; }
+  .scene .tag line { stroke: var(--amber); stroke-width: 1; }
+  .hud { position: absolute; top: 96px; right: 40px; text-align: right; color: var(--txt2); line-height: 1.8; }
+  .hud b { color: var(--txt1); font-weight: 500; }
+  @media (max-width: 960px) {
+    .stage { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    .viz { order: -1; padding: 84px 18px 0; }
+    .viz svg { max-height: 40vh; }
+    .copy { padding: 18px 18px 28px; border-right: 0; }
+    .copy h2, .copy > .tick { display: none; }
+    .steps { margin-top: 0; }
+    .step .ph { display: none; }
+    .hud { display: none; }
+  }
+
+  /* ---------- Pestañas de alcance ---------- */
+  .tabs { display: flex; flex-wrap: wrap; gap: 0; margin-top: 48px; border: 1px solid var(--ink); width: fit-content; max-width: 100%; }
+  .tabs button { background: none; border: 0; border-left: 1px solid var(--ink); padding: 12px 18px; font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); transition: background .25s, color .25s; }
+  .tabs button:first-child { border-left: 0; }
+  .tabs button[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+  .tabs button:hover:not([aria-selected="true"]) { color: var(--ink); background: var(--paper-2); }
+  .tabp[hidden] { display: none; }
+
+  /* ---------- Alcance técnico ---------- */
+  .scope-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px 80px; margin-top: 64px; align-items: start; }
+  @media (max-width: 960px) { .scope-grid { grid-template-columns: 1fr; } }
+  .spec { border-top: 1px solid var(--ink); }
+  .spec li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--line); font-size: 16.5px; line-height: 1.6; }
+  .spec li .mono { color: var(--steel); padding-top: 3px; }
+  .spec li b { font-weight: 500; }
+  .spec li span.d { color: var(--steel); }
+  .shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .shot { position: relative; height: 260px; overflow: hidden; background: var(--ink); }
+  .shot.wide { grid-column: 1 / -1; height: 300px; }
+  .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform 1.8s cubic-bezier(.2,.8,.2,1); }
+  .shot .cap { position: absolute; left: 0; bottom: 0; background: var(--paper); color: var(--ink); padding: 8px 12px; }
+  .shot { clip-path: inset(100% 0 0 0); transition: clip-path 1.1s cubic-bezier(.7,0,.2,1); }
+  .shot.in { clip-path: inset(0 0 0 0); }
+  .shot.in img { transform: scale(1); }
+
+  /* ---------- Proceso ---------- */
+  .proc { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .wo { margin-top: 64px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--ink); background: var(--paper); }
+  .wo > div { padding: 28px 24px 30px; border-left: 1px solid var(--ink); position: relative; }
+  .wo > div:first-child { border-left: 0; }
+  .wo .st { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--line); color: var(--steel); transition: all .4s; }
+  .wo .st::before { content: ""; width: 7px; height: 7px; border: 1px solid currentColor; }
+  .wo > div.done .st { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .wo > div.done .st::before { background: var(--amber); border-color: var(--amber); }
+  .wo h4 { font-size: 24px; margin-top: 22px; }
+  .wo p { margin-top: 10px; font-size: 15.5px; line-height: 1.6; color: var(--steel); }
+  .wo .n { position: absolute; top: 24px; right: 22px; color: var(--steel); }
+  @media (max-width: 960px) { .wo { grid-template-columns: 1fr 1fr; } .wo > div:nth-child(3) { border-left: 0; } .wo > div:nth-child(n+3) { border-top: 1px solid var(--ink); } }
+  @media (max-width: 560px) { .wo { grid-template-columns: 1fr; } .wo > div { border-left: 0; } .wo > div + div { border-top: 1px solid var(--ink); } }
+
+  /* ---------- Contacto y pie ---------- */
+  .contact { background: var(--ink); color: var(--on-dark); }
+  .contact .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px 80px; padding-top: 110px; padding-bottom: 110px; }
+  @media (max-width: 960px) { .contact .wrap { grid-template-columns: 1fr; padding-top: 80px; padding-bottom: 80px; } }
+  .contact h2 { font-size: clamp(36px, 4.4vw, 64px); margin-top: 20px; max-width: 14ch; }
+  .contact .lead { margin-top: 22px; font-size: 17px; line-height: 1.65; color: var(--on-dark-2); max-width: 46ch; }
+  .kv { border-top: 1px solid rgba(233,236,234,0.2); }
+  .kv div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid rgba(233,236,234,0.2); font-size: 16.5px; }
+  .kv .mono { color: var(--on-dark-2); padding-top: 3px; }
+  .kv a, .kv span { min-width: 0; overflow-wrap: anywhere; }
+  @media (max-width: 560px) { .kv div { grid-template-columns: 1fr; gap: 6px; } }
+  .kv a:hover { color: var(--amber); }
+  .foot { background: var(--ink); color: var(--on-dark-2); border-top: 1px solid rgba(233,236,234,0.12); }
+  .foot .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding-top: 28px; padding-bottom: 28px; font-size: 13.5px; }
+  .foot img { height: 22px; width: auto; filter: brightness(0) invert(1); opacity: 0.85; }
+  .foot nav { display: flex; gap: 20px; flex-wrap: wrap; }
+  .foot a:hover { color: var(--on-dark); }
+
+  /* ---------- Aparición ---------- */
+  [data-rv] { opacity: 0; transform: translateY(22px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
+  [data-rv].in { opacity: 1; transform: none; }
+  .line-rv { transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(.7,0,.2,1); }
+  .line-rv.in { transform: scaleX(1); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0s !important; animation: none !important; }
+    [data-rv], .shot { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="util"><div class="wrap">
+  <span class="mono">Meraki Port &amp; Industrial Services S.A.</span>
+  <span class="mono hide-m">Lomas de Zamora, Buenos Aires</span>
+  <span class="mono live">Cobertura en todo el país</span>
+</div></div>
+
+<header class="nav"><div class="wrap">
+  <a href="#inicio" aria-label="Meraki Services — inicio"><img src="assets/logo-meraki.png" alt="Meraki Services"></a>
+  <nav class="nav-links" aria-label="Principal">
+    <a href="#unidades">Unidades</a>
+    <a href="#portuario">Portuario</a>
+    <a href="#automatizacion">Automatización</a>
+    <a href="#solar">Solar</a>
+    <a href="#alcance">Alcance técnico</a>
+    <a href="#proceso">Cómo trabajamos</a>
+  </nav>
+  <a class="btn btn-ink" href="#contacto">Solicitar visita técnica <span class="arr" aria-hidden="true">→</span></a>
+</div></header>
+
+<main id="inicio">
+
+  <!-- PORTADA: plano que se dibuja y se revela en foto -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="mono tick" data-rv>Equipos portuarios · Viales · Autoelevadores · Grúas</span>
+        <h1 data-rv style="transition-delay:.1s">Mantenimiento de equipo <em>crítico</em> para operaciones que no se detienen.</h1>
+        <p class="lead" data-rv style="transition-delay:.2s">Reparación, mantenimiento, modificación y automatización de equipos portuarios, viales, autoelevadores y grúas. Mecánica, electricidad, electrónica e hidráulica en un mismo equipo técnico, en terminal, planta u obra.</p>
+        <div class="ctas" data-rv style="transition-delay:.3s">
+          <a class="btn btn-ink" href="#contacto">Solicitar visita técnica <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn-line" href="#unidades">Ver unidades de negocio</a>
+        </div>
+        <div class="disc mono" data-rv style="transition-delay:.4s">
+          <span>Mecánica</span><span>Electricidad</span><span>Electrónica</span><span>Hidráulica</span>
+        </div>
+      </div>
+
+      <div class="sheet" id="sheet" data-rv style="transition-delay:.15s">
+        <div class="sheet-top">
+          <span class="mono">Vista lateral — ReachStacker</span>
+          <div class="seg" role="group" aria-label="Modo de vista">
+            <button type="button" id="b-plano" aria-pressed="true">Plano</button>
+            <button type="button" id="b-foto" aria-pressed="false">Foto</button>
+          </div>
+        </div>
+        <div class="canvas">
+          <svg class="bp" id="bp" viewBox="0 0 880 500" role="img" aria-label="Plano lateral de un ReachStacker con sus sistemas principales señalados">
+            <!-- terreno -->
+            <line class="d thin" pathLength="1" x1="20" y1="440" x2="860" y2="440"/>
+            <!-- cota de altura -->
+            <path class="d dim" pathLength="1" d="M60 440 V102 M52 440 H68 M52 102 H68"/>
+            <!-- contrapeso y chasis -->
+            <path class="d" pathLength="1" d="M118 318 H185 V392 H118 Z"/>
+            <path class="d" pathLength="1" d="M185 340 H600 L622 362 V392 H185 Z"/>
+            <path class="d thin" pathLength="1" d="M200 356 H590"/>
+            <!-- ruedas -->
+            <circle class="d" pathLength="1" cx="260" cy="400" r="40"/>
+            <circle class="d thin" pathLength="1" cx="260" cy="400" r="16"/>
+            <circle class="d" pathLength="1" cx="530" cy="400" r="40"/>
+            <circle class="d thin" pathLength="1" cx="530" cy="400" r="16"/>
+            <!-- cabina -->
+            <path class="d" pathLength="1" d="M330 340 V232 H418 L428 250 V340"/>
+            <path class="d thin" pathLength="1" d="M342 246 H410 L416 262 V296 H342 Z"/>
+            <!-- pluma telescópica -->
+            <path class="d" pathLength="1" d="M196 304 L566 156 L578 184 L208 332 Z"/>
+            <path class="d" pathLength="1" d="M566 162 L716 102 L724 124 L574 182 Z"/>
+            <circle class="d" pathLength="1" cx="202" cy="318" r="8"/>
+            <!-- cilindro de elevación -->
+            <path class="d" pathLength="1" d="M444 338 L470 232 L486 236 L460 342 Z"/>
+            <line class="d" pathLength="1" x1="478" y1="234" x2="490" y2="192"/>
+            <!-- spreader -->
+            <path class="d" pathLength="1" d="M712 118 V170 M728 118 V170"/>
+            <path class="d" pathLength="1" d="M700 170 H740 V184 H700 Z"/>
+            <path class="d" pathLength="1" d="M610 184 H830 V198 H610 Z"/>
+            <!-- contenedor -->
+            <path class="d" pathLength="1" d="M612 198 H828 V300 H612 Z"/>
+            <path class="d thin" pathLength="1" d="M628 206 V292 M644 206 V292 M660 206 V292 M676 206 V292 M692 206 V292 M708 206 V292 M724 206 V292 M740 206 V292 M756 206 V292 M772 206 V292 M788 206 V292 M804 206 V292"/>
+            <!-- líneas de referencia -->
+            <path class="d thin" pathLength="1" d="M400 226 L300 98 M300 98 H262"/>
+            <path class="d thin" pathLength="1" d="M372 270 L190 196 M190 196 H152"/>
+            <path class="d thin" pathLength="1" d="M720 191 L780 66 M780 66 H818"/>
+            <path class="d thin" pathLength="1" d="M468 292 L640 380 M640 380 H676"/>
+            <path class="d thin" pathLength="1" d="M286 432 L360 470 M360 470 H392"/>
+            <!-- etiquetas -->
+            <g class="lab" style="transition-delay:3.0s"><circle cx="248" cy="98" r="12"/><text class="n" x="248" y="98">01</text><text x="128" y="102" text-anchor="start">Pluma</text></g>
+            <g class="lab" style="transition-delay:3.15s"><circle cx="138" cy="196" r="12"/><text class="n" x="138" y="196">02</text><text x="62" y="174">Cabina</text><text x="62" y="190">y mando</text></g>
+            <g class="lab" style="transition-delay:3.3s"><circle cx="832" cy="66" r="12"/><text class="n" x="832" y="66">03</text><text x="760" y="42">Spreader</text></g>
+            <g class="lab" style="transition-delay:3.45s"><circle cx="690" cy="380" r="12"/><text class="n" x="690" y="380">04</text><text x="708" y="384">Hidráulica</text></g>
+            <g class="lab" style="transition-delay:3.6s"><circle cx="406" cy="470" r="12"/><text class="n" x="406" y="470">05</text><text x="424" y="474">Tren motriz</text></g>
+          </svg>
+          <div class="photo" aria-hidden="true"><img src="assets/hero-terminal.jpg" alt=""></div>
+          <div class="scan" aria-hidden="true"></div>
+        </div>
+        <div class="tblock mono">
+          <div><span class="k">Equipo</span><span class="v">ReachStacker</span></div>
+          <div><span class="k">Sistemas</span><span class="v">Mec · Eléc · Hid</span></div>
+          <div><span class="k">Doc.</span><span class="v">MS-PORT-01</span></div>
+          <div><span class="k">Unidad</span><span class="v">01 Portuario</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFRAS -->
+  <section class="facts" aria-label="Datos de la empresa">
+    <div class="wrap">
+      <div class="fact" data-rv><div class="big"><span data-count="10">0</span><sup>+</sup></div><p>Años de experiencia del personal en el rubro</p></div>
+      <div class="fact" data-rv style="transition-delay:.08s"><div class="big"><span data-count="3">0</span></div><p>Unidades de negocio especializadas</p></div>
+      <div class="fact" data-rv style="transition-delay:.16s"><div class="big"><span data-count="4">0</span></div><p>Disciplinas técnicas: mecánica, electricidad, electrónica e hidráulica</p></div>
+      <div class="fact" data-rv style="transition-delay:.24s"><div class="big">AR</div><p>Cobertura nacional: viajamos a donde está el equipo</p></div>
+    </div>
+  </section>
+
+  <!-- UNIDADES -->
+  <section id="unidades" class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono tick" data-rv>Unidades de negocio</span>
+          <h2 data-rv style="transition-delay:.1s">Tres unidades. Un mismo estándar técnico.</h2>
+        </div>
+        <p data-rv style="transition-delay:.2s">Cada unidad tiene su equipo especializado y comparte la misma forma de trabajar: diagnóstico documentado, propuesta por escrito y entrega probada.</p>
+      </div>
+      <div class="index">
+        <a class="row" href="#portuario" data-rv>
+          <span class="num mono">U—01</span>
+          <h3>Portuario y Grúas</h3>
+          <p>ReachStacker, containeras, RTG, grúas viales y autoelevadores. Reparación, mantenimiento, modificación e inspecciones estructurales.</p>
+          <span class="thumb"><img src="assets/card-port.jpg" alt="" loading="lazy"></span>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+        <a class="row" href="#automatizacion" data-rv style="transition-delay:.08s">
+          <span class="num mono">U—02</span>
+          <h3>Automatización</h3>
+          <p>Tableros eléctricos, control PLC y HMI, variadores, instrumentación y telemetría, con puesta en marcha y capacitación.</p>
+          <span class="thumb"><img src="assets/card-auto.jpg" alt="" loading="lazy"></span>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+        <a class="row" href="#solar" data-rv style="transition-delay:.16s">
+          <span class="num mono">U—03</span>
+          <h3>Solar Energy</h3>
+          <p>Diseño, suministro e instalación de sistemas fotovoltaicos para industria, comercio y vivienda, dimensionados a consumo real.</p>
+          <span class="thumb"><img src="assets/card-solar.jpg" alt="" loading="lazy"></span>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTUARIO: relato con scroll (grúa RTG) -->
+  <section id="portuario" class="story" aria-label="Unidad Portuario y Grúas">
+    <div class="stage">
+      <div class="stage-grid" aria-hidden="true"></div>
+      <div class="copy">
+        <span class="mono tick on-dark">Unidad 01 — Portuario y Grúas</span>
+        <h2>Intervenimos cada sistema del equipo.</h2>
+        <div class="steps">
+          <article class="step on">
+            <span class="mono k">01 / Estructura</span>
+            <h3>Pórtico, pluma y elementos de izaje</h3>
+            <p>Inspecciones estructurales con informe documentado y registro fotográfico. Refuerzos y modificaciones según la necesidad real de la operación.</p>
+            <div class="ph"><img src="assets/port-estructura.jpg" alt="Inspección estructural de pluma" loading="lazy"></div>
+          </article>
+          <article class="step">
+            <span class="mono k">02 / Izaje e hidráulica</span>
+            <h3>Trolley, cables, spreader y sistemas hidráulicos</h3>
+            <p>Bombas, motores, mandos, cilindros y sellos. Diagnóstico de falla y reparación en sitio o en taller, con pruebas antes de entregar.</p>
+            <div class="ph"><img src="assets/port-hidraulica.jpg" alt="Reparación hidráulica en sitio" loading="lazy"></div>
+          </article>
+          <article class="step">
+            <span class="mono k">03 / Mando eléctrico</span>
+            <h3>Electricidad, electrónica y control</h3>
+            <p>Mando eléctrico y electrónico, tableros, PLC y variadores. La misma cuadrilla resuelve la falla mecánica y la eléctrica.</p>
+            <div class="ph"><img src="assets/card-auto.jpg" alt="Tablero eléctrico y control" loading="lazy"></div>
+          </article>
+          <article class="step">
+            <span class="mono k">04 / Traslación y entrega</span>
+            <h3>Tren motriz, frenos y puesta en servicio</h3>
+            <p>Motores y transmisiones. Cada intervención se entrega probada, con informe técnico y plan de mantenimiento preventivo.</p>
+            <div class="ph"><img src="assets/emp-taller.jpg" alt="Equipo portuario en taller" loading="lazy"></div>
+          </article>
+        </div>
+        <div class="rail" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span></div>
+        <div class="rail-l mono" aria-hidden="true"><span>Estructura</span><span>Izaje</span><span>Mando</span><span>Entrega</span></div>
+      </div>
+
+      <div class="viz">
+        <div class="hud mono" aria-hidden="true">RTG — vista lateral<br>Ciclo <b id="hud-p">000</b> / 100<br>Etapa <b id="hud-s">01</b></div>
+        <svg class="scene rtg" viewBox="0 0 900 560" role="img" aria-label="Grúa RTG moviendo un contenedor desde la pila hasta un camión">
+          <line class="ground" x1="20" y1="514" x2="880" y2="514"/>
+          <g id="stacks"></g>
+          <!-- camión -->
+          <g>
+            <path class="s" d="M588 480 H714 V492 H588 Z"/>
+            <circle class="s" cx="606" cy="503" r="10"/>
+            <circle class="s" cx="696" cy="503" r="10"/>
+          </g>
+          <!-- estructura -->
+          <g class="part" data-step="0">
+            <path class="s f" d="M90 486 L120 130 H150 L190 486 Z"/>
+            <path class="s f" d="M730 486 L770 130 H800 L830 486 Z"/>
+            <path class="s" d="M104 320 H176 M744 320 H816"/>
+            <path class="s f" d="M80 100 H840 V130 H80 Z"/>
+            <path class="s" d="M80 115 H840"/>
+          </g>
+          <!-- sala eléctrica y señal -->
+          <g class="part" data-step="2">
+            <path class="s f" d="M640 66 H740 V100 H640 Z"/>
+            <path class="s" d="M652 76 H668 V90 H652 Z M676 76 H692 V90 H676 Z"/>
+          </g>
+          <path class="sig" id="sig" d="M690 100 V122 H140 V300 M690 122 H780 V300"/>
+          <!-- traslación -->
+          <g class="part" data-step="3">
+            <path class="s f" d="M78 486 H202 V500 H78 Z"/>
+            <circle class="s" cx="100" cy="506" r="8"/><circle class="s" cx="180" cy="506" r="8"/>
+            <path class="s f" d="M718 486 H842 V500 H718 Z"/>
+            <circle class="s" cx="740" cy="506" r="8"/><circle class="s" cx="820" cy="506" r="8"/>
+          </g>
+          <!-- contenedor que se mueve -->
+          <g id="box">
+            <rect class="c" x="0" y="0" width="120" height="52"/>
+            <line x1="20" y1="6" x2="20" y2="46"/><line x1="40" y1="6" x2="40" y2="46"/><line x1="60" y1="6" x2="60" y2="46"/><line x1="80" y1="6" x2="80" y2="46"/><line x1="100" y1="6" x2="100" y2="46"/>
+          </g>
+          <!-- izaje -->
+          <g class="part" data-step="1">
+            <g id="trolley"><path class="s f" d="M-42 84 H42 V100 H-42 Z"/><circle class="s" cx="-26" cy="100" r="5"/><circle class="s" cx="26" cy="100" r="5"/></g>
+            <line class="s" id="c1" x1="0" y1="130" x2="0" y2="150"/>
+            <line class="s" id="c2" x1="0" y1="130" x2="0" y2="150"/>
+            <rect class="s f" id="spr" x="0" y="150" width="132" height="12"/>
+          </g>
+          <!-- etiquetas por etapa -->
+          <g class="tag" data-step="0"><line x1="460" y1="100" x2="460" y2="40"/><rect x="460" y="22" width="150" height="26"/><text x="470" y="40">Pórtico / viga</text></g>
+          <g class="tag" data-step="1" id="tag-izaje"><line x1="0" y1="0" x2="0" y2="0"/><rect x="0" y="0" width="140" height="26"/><text x="0" y="0">Spreader</text></g>
+          <g class="tag" data-step="2"><line x1="690" y1="66" x2="690" y2="34"/><rect x="600" y="8" width="180" height="26"/><text x="610" y="26">Sala eléctrica</text></g>
+          <g class="tag" data-step="3"><line x1="140" y1="486" x2="230" y2="545"/><rect x="230" y="532" width="170" height="26"/><text x="240" y="550">Tren de traslación</text></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOMATIZACIÓN: relato con scroll (tablero, PLC, variador) -->
+  <section id="automatizacion" class="story ink" aria-label="Unidad Automatización">
+    <div class="stage">
+      <div class="stage-grid" aria-hidden="true"></div>
+      <div class="copy">
+        <span class="mono tick">Unidad 02 — Automatización</span>
+        <h2>Control, seguridad y datos de su equipo.</h2>
+        <div class="steps">
+          <article class="step on">
+            <span class="mono k">01 / Ingeniería</span>
+            <h3>Tableros de fuerza y control</h3>
+            <p>Levantamiento en campo, arquitectura de control y planos eléctricos. Fabricación, cableado y pruebas de tableros antes de instalarlos.</p>
+            <div class="ph"><img src="assets/emp-taller.jpg" alt="Trabajo técnico en taller" loading="lazy"></div>
+          </article>
+          <article class="step">
+            <span class="mono k">02 / Instrumentación</span>
+            <h3>Señales de campo confiables</h3>
+            <p>Instrumentación de presión, temperatura, nivel, peso y posición. Sistemas de seguridad, enclavamientos y paradas de emergencia.</p>
+            <div class="ph"><img src="assets/emp-equipo.jpg" alt="Equipo técnico en sitio" loading="lazy"></div>
+          </article>
+          <article class="step">
+            <span class="mono k">03 / Control</span>
+            <h3>Programación PLC y HMI</h3>
+            <p>Lógica y pantallas de operación desarrolladas, depuradas y respaldadas. Redes industriales y telemetría: variables, alarmas y reportes de disponibilidad.</p>
+            <div class="ph"><img src="assets/card-auto.jpg" alt="Tablero eléctrico y control" loading="lazy"></div>
+          </article>
+          <article class="step">
+            <span class="mono k">04 / Puesta en marcha</span>
+            <h3>Variadores, retrofit y capacitación</h3>
+            <p>Parametrización y puesta en marcha de variadores. Retrofit de control obsoleto conservando la mecánica, y capacitación del personal de mantenimiento.</p>
+            <div class="ph"><img src="assets/hero-terminal.jpg" alt="Equipos portuarios en operación" loading="lazy"></div>
+          </article>
+        </div>
+        <div class="rail" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span></div>
+        <div class="rail-l mono" aria-hidden="true"><span>Tablero</span><span>Campo</span><span>PLC / HMI</span><span>Marcha</span></div>
+      </div>
+
+      <div class="viz">
+        <div class="hud mono" aria-hidden="true">Esquema de control<br>Variador <b class="hz-hud">00.0</b> Hz<br>Etapa <b class="st-hud">01</b></div>
+        <svg class="scene auto" viewBox="0 0 900 560" role="img" aria-label="Esquema de un tablero con PLC, variador y motor, conectado a sensores de campo y a una pantalla HMI">
+          <!-- tablero -->
+          <g class="part" data-step="0">
+            <rect class="s f" x="250" y="120" width="420" height="380" rx="3"/>
+            <rect class="s t" x="262" y="132" width="396" height="356"/>
+            <path class="s t" d="M276 355 H644"/>
+            <rect class="s f" x="290" y="332" width="40" height="46"/><rect class="s f" x="348" y="332" width="40" height="46"/><rect class="s f" x="406" y="332" width="40" height="46"/><rect class="s f" x="464" y="332" width="40" height="46"/><rect class="s f" x="522" y="332" width="40" height="46"/><rect class="s f" x="580" y="332" width="40" height="46"/>
+            <path class="s t" d="M310 340 V352 M368 340 V352 M426 340 V352 M484 340 V352 M542 340 V352 M600 340 V352"/>
+            <rect class="s f" x="280" y="440" width="360" height="28"/>
+            <path class="s t" id="bornes" d=""/>
+            <text class="lbl" x="270" y="486">TABLERO TG-01</text>
+          </g>
+          <!-- PLC -->
+          <g class="part" data-step="2">
+            <rect class="s f" x="280" y="170" width="230" height="110"/>
+            <path class="s t" d="M320 170 V280 M380 170 V280 M430 170 V280 M480 170 V280"/>
+            <text class="lbl" x="288" y="272">PS</text><text class="lbl" x="336" y="272">CPU</text><text class="lbl" x="396" y="272">DI</text><text class="lbl" x="446" y="272">DO</text><text class="lbl" x="484" y="272">NET</text>
+            <circle class="led" data-led="2" cx="350" cy="190" r="4"/>
+            <circle class="led" data-led="1" cx="405" cy="190" r="4" style="animation-delay:.2s"/><circle class="led" data-led="1" cx="405" cy="208" r="4" style="animation-delay:.6s"/><circle class="led" data-led="1" cx="405" cy="226" r="4" style="animation-delay:1s"/>
+            <circle class="led" data-led="2" cx="455" cy="190" r="4" style="animation-delay:.4s"/><circle class="led" data-led="2" cx="455" cy="208" r="4" style="animation-delay:.9s"/><circle class="led" data-led="3" cx="455" cy="226" r="4" style="animation-delay:.1s"/>
+          </g>
+          <!-- HMI -->
+          <g class="part" data-step="2">
+            <rect class="s f" x="700" y="150" width="170" height="120" rx="3"/>
+            <rect class="s t" x="712" y="162" width="146" height="84"/>
+            <rect class="bar" x="724" y="232" width="12" height="6"/><rect class="bar" x="746" y="232" width="12" height="6"/><rect class="bar" x="768" y="232" width="12" height="6"/><rect class="bar" x="790" y="232" width="12" height="6"/><rect class="bar" x="812" y="232" width="12" height="6"/><rect class="bar" x="834" y="232" width="12" height="6"/>
+            <text class="lbl" x="712" y="262">HMI</text>
+          </g>
+          <!-- variador -->
+          <g class="part" data-step="3">
+            <rect class="s f" x="540" y="170" width="100" height="150"/>
+            <rect class="s t" x="555" y="185" width="70" height="30"/>
+            <text class="lbl dig hz" x="562" y="206">00.0</text>
+            <circle class="s t" cx="572" cy="240" r="7"/><circle class="s t" cx="608" cy="240" r="7"/>
+            <text class="lbl" x="552" y="306">VFD</text>
+          </g>
+          <!-- motor -->
+          <g class="part" data-step="3">
+            <circle class="s f" cx="790" cy="420" r="46"/>
+            <g class="rotor"><path class="s" d="M790 384 V456 M754 420 H826 M765 395 L815 445 M815 395 L765 445"/></g>
+            <circle class="s f" cx="790" cy="420" r="9"/>
+            <text class="lbl" x="772" y="490">M 3~</text>
+            <path class="s t" d="M336 52 Q350 38 364 52 M326 42 Q350 18 374 42"/>
+          </g>
+          <!-- dispositivos de campo -->
+          <g class="part" data-step="1">
+            <circle class="s f" cx="90" cy="170" r="22"/><path class="s" d="M90 170 L104 158"/>
+            <text class="lbl" x="68" y="212">PT-01</text>
+            <rect class="s f" x="70" y="282" width="40" height="36"/><path class="s" d="M110 290 L128 276"/><circle class="s" cx="131" cy="273" r="5"/>
+            <text class="lbl" x="68" y="338">ZS-02</text>
+            <circle class="s f" cx="90" cy="400" r="24"/><circle class="s" cx="90" cy="400" r="13"/>
+            <text class="lbl" x="64" y="446">E-STOP</text>
+          </g>
+          <!-- cableado (se dibuja con el scroll) y señales -->
+          <g class="wires">
+            <path class="s wire" pathLength="1" data-sig="1" d="M112 170 H220 V292 H392 V280"/>
+            <path class="s wire" pathLength="1" data-sig="1" d="M110 300 H232 V304 H406 V280"/>
+            <path class="s wire" pathLength="1" data-sig="1" d="M114 400 H244 V316 H420 V280"/>
+            <path class="s wire" pathLength="1" data-sig="2" d="M495 170 V140 H680 V210 H700"/>
+            <path class="s wire" pathLength="1" data-sig="3" d="M455 280 V322 H560 V320"/>
+            <path class="s wire" pathLength="1" data-sig="3" d="M620 320 V490 H790 V466"/>
+            <path class="s wire" pathLength="1" data-sig="3" d="M350 170 V60"/>
+          </g>
+          <!-- etiquetas -->
+          <g class="tag" data-step="0"><line x1="262" y1="120" x2="250" y2="92"/><rect x="40" y="66" width="236" height="26"/><text x="50" y="84">Tablero fuerza y control</text></g>
+          <g class="tag" data-step="1"><line x1="90" y1="424" x2="100" y2="500"/><rect x="20" y="500" width="220" height="26"/><text x="30" y="518">Instrumentación campo</text></g>
+          <g class="tag" data-step="2"><line x1="420" y1="170" x2="420" y2="100"/><rect x="400" y="74" width="120" height="26"/><text x="410" y="92">PLC / HMI</text></g>
+          <g class="tag" data-step="3"><line x1="790" y1="374" x2="800" y2="326"/><rect x="726" y="300" width="164" height="26"/><text x="736" y="318">Variador y motor</text></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLAR: relato con scroll (un día de generación) -->
+  <section id="solar" class="story light" aria-label="Unidad Solar Energy">
+    <div class="stage">
+      <div class="stage-grid" aria-hidden="true"></div>
+      <div class="copy">
+        <span class="mono tick">Unidad 03 — Solar Energy</span>
+        <h2>Energía dimensionada a su consumo real.</h2>
+        <div class="steps">
+          <article class="step on">
+            <span class="mono k">01 / Estudio</span>
+            <h3>Análisis de consumo y del sitio</h3>
+            <p>Revisión de facturación y perfil de carga para dimensionar la solución, y evaluación del lugar de instalación.</p>
+            <div class="ph"><img src="assets/solar-casa.jpg" alt="Instalación fotovoltaica sobre vivienda" loading="lazy"></div>
+          </article>
+          <article class="step">
+            <span class="mono k">02 / Diseño</span>
+            <h3>Dimensionamiento del sistema</h3>
+            <p>Cálculo de generación, distribución de módulos, inversores, protecciones y esquema eléctrico, para industria, comercio y vivienda.</p>
+            <div class="ph"><img src="assets/card-solar.jpg" alt="Módulos fotovoltaicos" loading="lazy"></div>
+          </article>
+          <article class="step">
+            <span class="mono k">03 / Instalación</span>
+            <h3>Montaje, conexión y pruebas</h3>
+            <p>Suministro de módulos, estructura, inversores y tablería. Montaje mecánico, cableado, protecciones y puesta en marcha.</p>
+            <div class="ph"><img src="assets/solar-techo.jpg" alt="Montaje fotovoltaico sobre techo" loading="lazy"></div>
+          </article>
+          <article class="step">
+            <span class="mono k">04 / Respaldo</span>
+            <h3>Baterías y mantenimiento</h3>
+            <p>Integración de baterías para cargas críticas. Limpieza, inspección y seguimiento de rendimiento de la instalación.</p>
+            <div class="ph"><img src="assets/emp-equipo.jpg" alt="Equipo técnico de Meraki Services" loading="lazy"></div>
+          </article>
+        </div>
+        <div class="rail" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span></div>
+        <div class="rail-l mono" aria-hidden="true"><span>Estudio</span><span>Diseño</span><span>Instalación</span><span>Respaldo</span></div>
+      </div>
+
+      <div class="viz">
+        <div class="hud mono" aria-hidden="true">Simulación de un día<br>Hora <b class="hora-hud">06:00</b><br>Generación FV <b class="fv-hud">0</b>%</div>
+        <svg class="scene solar" viewBox="0 0 900 560" role="img" aria-label="Planta con paneles solares, inversor y baterías, mostrando el flujo de energía a lo largo de un día">
+          <path class="arc" d="M60 300 Q450 -120 840 300"/>
+          <g class="sunG"><circle class="sun" r="22"/>
+            <g class="rays"><line class="ray" x1="0" y1="-31" x2="0" y2="-40"/><line class="ray" x1="0" y1="31" x2="0" y2="40"/><line class="ray" x1="-31" y1="0" x2="-40" y2="0"/><line class="ray" x1="31" y1="0" x2="40" y2="0"/><line class="ray" x1="22" y1="22" x2="28" y2="28"/><line class="ray" x1="-22" y1="-22" x2="-28" y2="-28"/><line class="ray" x1="22" y1="-22" x2="28" y2="-28"/><line class="ray" x1="-22" y1="22" x2="-28" y2="28"/></g>
+          </g>
+          <line class="ground" x1="20" y1="500" x2="880" y2="500"/>
+          <!-- red eléctrica -->
+          <g class="part" data-step="0">
+            <path class="s" d="M860 500 V300 M836 316 H884 M842 316 V324 M878 316 V324"/>
+            <text class="lbl" x="838" y="292">RED</text>
+          </g>
+          <!-- planta -->
+          <g class="part" data-step="0">
+            <path class="s f" d="M300 500 V330 L500 250 L700 330 V500"/>
+            <path class="s t" d="M288 335 L500 250 L712 335"/>
+            <path class="s t" d="M460 500 V410 H540 V500 M460 425 H540 M460 440 H540 M460 455 H540 M460 470 H540 M460 485 H540"/>
+            <path class="s t" d="M560 370 H680 V392 H560 Z M600 370 V392 M640 370 V392"/>
+            <path class="s t" d="M380 470 h50 v30 h-50 Z M560 460 h70 v40 h-70 Z"/>
+            <rect class="s f" x="320" y="380" width="42" height="56"/>
+            <text class="lbl" x="326" y="452">TG</text>
+          </g>
+          <!-- paneles -->
+          <g class="part" data-step="1">
+            <g class="panels"></g>
+            <path class="s t dimv" d="" stroke-dasharray="4 4"/>
+          </g>
+          <!-- inversor -->
+          <g class="part ghost" data-step="2">
+            <rect class="s f" x="720" y="350" width="56" height="64"/>
+            <path class="s" d="M732 390 q6 -10 12 0 t12 0 t12 0"/>
+            <text class="lbl" x="730" y="372">INV</text>
+          </g>
+          <!-- baterías -->
+          <g class="part ghost" data-step="3">
+            <rect class="s f" x="720" y="430" width="56" height="70"/>
+            <path class="s t" d="M720 447 H776 M720 464 H776 M720 481 H776"/>
+            <text class="lbl" x="730" y="443">BAT</text>
+          </g>
+          <!-- flujos de energía -->
+          <path class="sig" data-flow="pv" d="M486 256 L500 250 L706 332 H748 V350"/>
+          <path class="sig" data-flow="ac" d="M720 392 H362"/>
+          <path class="sig" data-flow="bat" d="M748 414 V430"/>
+          <path class="sig" data-flow="grid" d="M860 316 Q790 330 712 344 H341 V380"/>
+          <path class="sig" data-flow="load" d="M362 420 H405 V470 M362 428 H595 V460"/>
+          <!-- etiquetas -->
+          <g class="tag" data-step="0"><line x1="320" y1="408" x2="250" y2="420"/><rect x="60" y="407" width="190" height="26"/><text x="70" y="425">Perfil de consumo</text></g>
+          <g class="tag" data-step="1"><line x1="400" y1="268" x2="380" y2="202"/><rect x="290" y="176" width="200" height="26"/><text x="300" y="194">Arreglo fotovoltaico</text></g>
+          <g class="tag" data-step="2"><line x1="748" y1="350" x2="760" y2="252"/><rect x="706" y="226" width="110" height="26"/><text x="716" y="244">Inversor</text></g>
+          <g class="tag" data-step="3"><line x1="748" y1="500" x2="748" y2="528"/><rect x="660" y="528" width="180" height="26"/><text x="670" y="546">Banco de baterías</text></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALCANCE TÉCNICO por unidad -->
+  <section id="alcance" class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono tick" data-rv>Alcance técnico</span>
+          <h2 data-rv style="transition-delay:.1s">Equipos y sistemas que intervenimos.</h2>
+        </div>
+        <p data-rv style="transition-delay:.2s">El detalle técnico de cada unidad, con intervención mecánica, eléctrica, electrónica e hidráulica y repuestos multimarca.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Unidad" data-rv>
+        <button type="button" role="tab" aria-selected="true" aria-controls="tp-port" id="tb-port">01 Portuario y Grúas</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="tp-auto" id="tb-auto" tabindex="-1">02 Automatización</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="tp-solar" id="tb-solar" tabindex="-1">03 Solar Energy</button>
+      </div>
+
+      <div class="tabp" id="tp-port" role="tabpanel" aria-labelledby="tb-port">
+        <div class="scope-grid" style="margin-top:40px">
+          <ol class="spec">
+            <li data-rv><span class="mono">P.01</span><span><b>ReachStacker, containeras y RTG.</b> <span class="d">Mando, hidráulica y electricidad.</span></span></li>
+            <li data-rv><span class="mono">P.02</span><span><b>Autoelevadores</b> <span class="d">y equipos de manejo de carga.</span></span></li>
+            <li data-rv><span class="mono">P.03</span><span><b>Grúas viales</b> <span class="d">y equipos portuarios de izaje.</span></span></li>
+            <li data-rv><span class="mono">P.04</span><span><b>Sistemas hidráulicos:</b> <span class="d">bombas, motores, mandos, cilindros y sellos.</span></span></li>
+            <li data-rv><span class="mono">P.05</span><span><b>Inspecciones estructurales</b> <span class="d">con informe documentado y registro fotográfico.</span></span></li>
+            <li data-rv><span class="mono">P.06</span><span><b>Aire acondicionado de maquinaria</b> <span class="d">y atención de emergencias operativas.</span></span></li>
+          </ol>
+          <div class="shots">
+            <figure class="shot wide" style="margin:0"><img src="assets/port-noche.jpg" alt="Grúas en muelle de noche" loading="lazy"><figcaption class="cap mono">Operación en muelle</figcaption></figure>
+            <figure class="shot" style="margin:0;transition-delay:.12s"><img src="assets/port-hidraulica.jpg" alt="Reparación hidráulica en sitio" loading="lazy"><figcaption class="cap mono">Hidráulica</figcaption></figure>
+            <figure class="shot" style="margin:0;transition-delay:.24s"><img src="assets/port-estructura.jpg" alt="Inspección estructural" loading="lazy"><figcaption class="cap mono">Estructura</figcaption></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabp" id="tp-auto" role="tabpanel" aria-labelledby="tb-auto" hidden>
+        <div class="scope-grid" style="margin-top:40px">
+          <ol class="spec">
+            <li><span class="mono">A.01</span><span><b>PLC y HMI</b> <span class="d">de fabricantes principales, con lógica documentada y respaldada.</span></span></li>
+            <li><span class="mono">A.02</span><span><b>Variadores de frecuencia:</b> <span class="d">parametrización, sustitución y puesta en marcha.</span></span></li>
+            <li><span class="mono">A.03</span><span><b>Redes industriales</b> <span class="d">y comunicación entre equipos de planta.</span></span></li>
+            <li><span class="mono">A.04</span><span><b>Instrumentación</b> <span class="d">de presión, temperatura, nivel, peso y posición.</span></span></li>
+            <li><span class="mono">A.05</span><span><b>Sistemas de seguridad,</b> <span class="d">enclavamientos y paradas de emergencia.</span></span></li>
+            <li><span class="mono">A.06</span><span><b>Telemetría y monitoreo:</b> <span class="d">registro de variables, alarmas y reportes de disponibilidad.</span></span></li>
+          </ol>
+          <div class="shots">
+            <figure class="shot wide" style="margin:0"><img src="assets/card-auto.jpg" alt="Tablero eléctrico y control" loading="lazy"><figcaption class="cap mono">Tableros y control</figcaption></figure>
+            <figure class="shot" style="margin:0;transition-delay:.12s"><img src="assets/emp-equipo.jpg" alt="Equipo técnico en sitio" loading="lazy"><figcaption class="cap mono">Puesta en marcha</figcaption></figure>
+            <figure class="shot" style="margin:0;transition-delay:.24s"><img src="assets/emp-taller.jpg" alt="Trabajo en taller" loading="lazy"><figcaption class="cap mono">Retrofit</figcaption></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabp" id="tp-solar" role="tabpanel" aria-labelledby="tb-solar" hidden>
+        <div class="scope-grid" style="margin-top:40px">
+          <ol class="spec">
+            <li><span class="mono">S.01</span><span><b>Análisis de consumo</b> <span class="d">y evaluación del sitio de instalación.</span></span></li>
+            <li><span class="mono">S.02</span><span><b>Dimensionamiento</b> <span class="d">de generación, inversores y protecciones.</span></span></li>
+            <li><span class="mono">S.03</span><span><b>Suministro</b> <span class="d">de módulos, estructura, inversores y tablería.</span></span></li>
+            <li><span class="mono">S.04</span><span><b>Instalación, conexión</b> <span class="d">y pruebas de generación.</span></span></li>
+            <li><span class="mono">S.05</span><span><b>Sistemas con respaldo:</b> <span class="d">integración de baterías para cargas críticas.</span></span></li>
+            <li><span class="mono">S.06</span><span><b>Mantenimiento,</b> <span class="d">limpieza y monitoreo de rendimiento.</span></span></li>
+          </ol>
+          <div class="shots">
+            <figure class="shot wide" style="margin:0"><img src="assets/solar-techo.jpg" alt="Montaje fotovoltaico sobre techo" loading="lazy"><figcaption class="cap mono">Montaje en techo</figcaption></figure>
+            <figure class="shot" style="margin:0;transition-delay:.12s"><img src="assets/solar-casa.jpg" alt="Instalación residencial" loading="lazy"><figcaption class="cap mono">Residencial</figcaption></figure>
+            <figure class="shot" style="margin:0;transition-delay:.24s"><img src="assets/card-solar.jpg" alt="Módulos fotovoltaicos" loading="lazy"><figcaption class="cap mono">Módulos</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO como orden de trabajo -->
+  <section id="proceso" class="sec proc">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono tick" data-rv>Cómo trabajamos</span>
+          <h2 data-rv style="transition-delay:.1s">De la visita técnica a la entrega.</h2>
+        </div>
+        <p data-rv style="transition-delay:.2s">Cada trabajo avanza como una orden de trabajo: alcance, repuestos, tiempos y costos por escrito antes de empezar.</p>
+      </div>
+      <div class="wo" id="wo" data-rv>
+        <div><span class="mono n">OT—01</span><span class="mono st">Levantamiento</span><h4>Diagnóstico</h4><p>Visita técnica y diagnóstico del equipo o del sitio.</p></div>
+        <div><span class="mono n">OT—02</span><span class="mono st">Propuesta</span><h4>Presupuesto</h4><p>Alcance, repuestos, tiempos y costos por escrito.</p></div>
+        <div><span class="mono n">OT—03</span><span class="mono st">Ejecución</span><h4>Intervención</h4><p>Cuadrilla asignada y control de avance.</p></div>
+        <div><span class="mono n">OT—04</span><span class="mono st">Entregado</span><h4>Entrega probada</h4><p>Pruebas, informe técnico y plan de mantenimiento.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="contact">
+    <div class="wrap">
+      <div>
+        <span class="mono tick on-dark" data-rv>Contacto</span>
+        <h2 data-rv style="transition-delay:.1s">Solicite una visita técnica.</h2>
+        <p class="lead" data-rv style="transition-delay:.2s">Consultas técnicas, licitaciones y emergencias operativas: responde un especialista de la unidad correspondiente.</p>
+        <div data-rv style="display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;transition-delay:.3s">
+          <a class="btn btn-amber" id="wa" href="https://wa.me/" target="_blank" rel="noopener">Escribir por WhatsApp <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn-line-d" href="mailto:contacto@merakiservices.com.ar">Enviar correo</a>
+        </div>
+      </div>
+      <div class="kv" data-rv style="transition-delay:.2s">
+        <div><span class="mono">Correo</span><a href="mailto:contacto@merakiservices.com.ar">contacto@merakiservices.com.ar</a></div>
+        <div><span class="mono">Teléfono</span><a id="tel" href="tel:+540000000000">+54 000 000 0000</a></div>
+        <div><span class="mono">Sede</span><span>Lomas de Zamora, Buenos Aires</span></div>
+        <div><span class="mono">Atendemos</span><span>Consultas técnicas y presupuestos · Licitaciones y compras corporativas · Emergencias operativas · Repuestos e insumos</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <img src="assets/logo-meraki.png" alt="Meraki Services">
+  <nav aria-label="Redes">
+    <a href="https://www.instagram.com/meraki.services/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.instagram.com/merakiservices.solarenergy/" target="_blank" rel="noopener">Instagram Solar</a>
+    <a href="https://ar.linkedin.com/company/meraki-services-argentina" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.facebook.com/p/Meraki-Services-61558466575452/" target="_blank" rel="noopener">Facebook</a>
+  </nav>
+  <span>© 2026 Meraki Port &amp; Industrial Services S.A.</span>
+</div></footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+  var ease = function (t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; };
+  var seg = function (p, a, b) { return ease(clamp((p - a) / (b - a), 0, 1)); };
+  var NS = "http://www.w3.org/2000/svg";
+  var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
+
+  /* ================= Portada: plano que se dibuja y se revela ================= */
+  var bp = $("#bp"), sheet = $("#sheet"), bPl = $("#b-plano"), bFo = $("#b-foto");
+  $$(".d", bp).forEach(function (el, i) { el.style.transitionDelay = (0.25 + i * 0.075) + "s"; });
+  function setMode(photo) {
+    bPl.setAttribute("aria-pressed", photo ? "false" : "true");
+    bFo.setAttribute("aria-pressed", photo ? "true" : "false");
+    sheet.classList.toggle("is-photo", photo);
+    if (photo) { sheet.classList.remove("scanning"); void sheet.offsetWidth; sheet.classList.add("scanning"); }
+  }
+  var auto = null;
+  bPl.addEventListener("click", function () { clearTimeout(auto); setMode(false); });
+  bFo.addEventListener("click", function () { clearTimeout(auto); setMode(true); });
+  requestAnimationFrame(function () { requestAnimationFrame(function () { bp.classList.add("go"); }); });
+  if (!reduce) auto = setTimeout(function () { setMode(true); }, 6200);
+
+  /* ================= Motor genérico de relatos con scroll ================= */
+  var stories = [];
+  function story(sel, update) {
+    var sec = $(sel);
+    var o = { sec: sec, steps: $$(".step", sec), bars: $$(".rail i", sec), parts: $$(".part", sec), tags: $$(".tag", sec), cur: -1, p: 0, update: update };
+    stories.push(o);
+    return o;
+  }
+  function inStep(el, s) { return (el.getAttribute("data-step") || "").split(" ").indexOf(String(s)) > -1; }
+  function runStory(o, vh, now) {
+    var r = o.sec.getBoundingClientRect();
+    if (r.top > vh || r.bottom < 0) return;
+    var p = clamp(-r.top / (r.height - vh), 0, 1);
+    var s = Math.min(3, Math.floor(p * 4));
+    if (s !== o.cur) {
+      o.cur = s;
+      o.steps.forEach(function (el, i) { el.classList.toggle("on", i === s); });
+      o.parts.forEach(function (el) { el.classList.toggle("hot", inStep(el, s)); });
+      o.tags.forEach(function (el) { el.classList.toggle("on", inStep(el, s)); });
+      var h = $(".st-hud", o.sec); if (h) h.textContent = pad2(s + 1);
+    }
+    o.bars.forEach(function (b, i) { b.style.transform = "scaleX(" + clamp(p * 4 - i, 0, 1) + ")"; });
+    o.update(p, s, now);
+  }
+
+  /* ---------- 01 Portuario: grúa RTG ---------- */
+  var stacks = $("#stacks");
+  function cont(x, y) {
+    var g = document.createElementNS(NS, "g");
+    var r = document.createElementNS(NS, "rect");
+    r.setAttribute("class", "cont"); r.setAttribute("x", x); r.setAttribute("y", y); r.setAttribute("width", 120); r.setAttribute("height", 52);
+    g.appendChild(r);
+    for (var k = 1; k < 6; k++) {
+      var l = document.createElementNS(NS, "line");
+      l.setAttribute("class", "cont-l"); l.setAttribute("x1", x + k * 20); l.setAttribute("x2", x + k * 20); l.setAttribute("y1", y + 6); l.setAttribute("y2", y + 46);
+      g.appendChild(l);
+    }
+    stacks.appendChild(g);
+  }
+  [[210, 3], [340, 2], [470, 2]].forEach(function (c) { for (var t = 0; t < c[1]; t++) cont(c[0], 462 - t * 52); });
+
+  var trolley = $("#trolley"), c1 = $("#c1"), c2 = $("#c2"), spr = $("#spr"), box = $("#box"), tagIz = $("#tag-izaje");
+  var sigR = $("#sig"), hudP = $("#hud-p"), hudS = $("#hud-s");
+  function rtg(p, s) {
+    var x = p < 0.25 ? lerp(270, 530, seg(p, 0.04, 0.25)) : (p < 0.65 ? 530 : lerp(530, 650, seg(p, 0.65, 0.85)));
+    var y;
+    if (p < 0.25) y = 150;
+    else if (p < 0.45) y = lerp(150, 346, seg(p, 0.25, 0.42));
+    else if (p < 0.65) y = lerp(346, 150, seg(p, 0.47, 0.64));
+    else if (p < 0.85) y = 150;
+    else y = lerp(150, 416, seg(p, 0.85, 0.98));
+    trolley.setAttribute("transform", "translate(" + x + ",0)");
+    c1.setAttribute("x1", x - 30); c1.setAttribute("x2", x - 30); c1.setAttribute("y2", y);
+    c2.setAttribute("x1", x + 30); c2.setAttribute("x2", x + 30); c2.setAttribute("y2", y);
+    spr.setAttribute("x", x - 66); spr.setAttribute("y", y);
+    var bx = p < 0.45 ? 470 : x - 60, by = p < 0.45 ? 358 : y + 12;
+    box.setAttribute("transform", "translate(" + bx + "," + by + ")");
+    var ln = tagIz.querySelector("line");
+    ln.setAttribute("x1", x + 66); ln.setAttribute("y1", y + 6); ln.setAttribute("x2", x + 96); ln.setAttribute("y2", y - 24);
+    tagIz.querySelector("rect").setAttribute("x", x + 96); tagIz.querySelector("rect").setAttribute("y", y - 38);
+    tagIz.querySelector("text").setAttribute("x", x + 106); tagIz.querySelector("text").setAttribute("y", y - 20);
+    sigR.classList.toggle("on", s === 2);
+    hudS.textContent = pad2(s + 1);
+    hudP.textContent = String(Math.round(p * 100)).padStart(3, "0");
+  }
+  story("#portuario", rtg);
+
+  /* ---------- 02 Automatización: tablero, PLC, variador y motor ---------- */
+  var A = $("#automatizacion");
+  (function () {
+    var d = "";
+    for (var x = 292; x < 640; x += 12) d += "M" + x + " 440 V468 ";
+    $("#bornes", A).setAttribute("d", d);
+  })();
+  var wires = $$(".wire", A), sigsA = [];
+  wires.forEach(function (w) {
+    var c = document.createElementNS(NS, "path");
+    c.setAttribute("d", w.getAttribute("d"));
+    c.setAttribute("class", "sig");
+    c.setAttribute("data-sig", w.getAttribute("data-sig"));
+    w.parentNode.appendChild(c);
+    sigsA.push(c);
+  });
+  var leds = $$(".led", A), barsA = $$(".bar", A), hz = $(".hz", A), hzHud = $(".hz-hud", A), rotor = $(".rotor", A), rotAng = 0, lastS = -1;
+  function autom(p, s, now) {
+    var dr = seg(p, 0.02, 0.2);
+    wires.forEach(function (w) { w.style.strokeDashoffset = 1 - dr; });
+    if (s !== lastS) {
+      lastS = s;
+      sigsA.forEach(function (g) { g.classList.toggle("on", +g.getAttribute("data-sig") === s); });
+      leds.forEach(function (l) { l.classList.toggle("on", s >= +l.getAttribute("data-led")); });
+    }
+    var f = s === 3 ? seg(p, 0.76, 0.95) * 50 : 0;
+    var txt = (f < 10 ? "0" : "") + f.toFixed(1);
+    hz.textContent = txt; hzHud.textContent = txt;
+    rotAng = (rotAng + f * 0.35) % 360;
+    rotor.setAttribute("transform", "rotate(" + rotAng.toFixed(1) + " 790 420)");
+    var t = now / 1000;
+    barsA.forEach(function (b, i) {
+      var h = s >= 2 ? 14 + 50 * (0.5 + 0.5 * Math.sin(t * 1.6 + i * 0.9)) : 6;
+      b.setAttribute("y", 238 - h); b.setAttribute("height", h);
+    });
+  }
+  story("#automatizacion", autom);
+
+  /* ---------- 03 Solar: un día de generación ---------- */
+  var S = $("#solar");
+  var roofY = function (x) { return 334 - 0.4 * (x - 290); };
+  var panelsG = $(".panels", S), panels = [];
+  for (var i = 0; i < 4; i++) {
+    var x0 = 306 + i * 46, x1 = x0 + 40;
+    var pth = document.createElementNS(NS, "path");
+    pth.setAttribute("class", "panel");
+    pth.setAttribute("pathLength", "1");
+    pth.setAttribute("d", "M" + x0 + " " + (roofY(x0) - 6) + " L" + x1 + " " + (roofY(x1) - 6) + " L" + x1 + " " + (roofY(x1) - 22) + " L" + x0 + " " + (roofY(x0) - 22) + " Z M" + (x0 + 20) + " " + (roofY(x0 + 20) - 6) + " V" + (roofY(x0 + 20) - 22));
+    panelsG.appendChild(pth); panels.push(pth);
+  }
+  $(".dimv", S).setAttribute("d", "M306 " + (roofY(306) - 36) + " L486 " + (roofY(486) - 36) + " M306 " + (roofY(306) - 30) + " V" + (roofY(306) - 42) + " M486 " + (roofY(486) - 30) + " V" + (roofY(486) - 42));
+  var dimv = $(".dimv", S);
+  var sunG = $(".sunG", S), rays = $(".rays", S);
+  var inv = $('.part[data-step="2"]', S), bat = $('.part[data-step="3"]', S);
+  var fl = {}; $$("[data-flow]", S).forEach(function (el) { fl[el.getAttribute("data-flow")] = el; });
+  var horaHud = $(".hora-hud", S), fvHud = $(".fv-hud", S);
+  function solar(p, s, now) {
+    var t = clamp(p / 0.9, 0, 1);
+    var sx = (1 - t) * (1 - t) * 60 + 2 * (1 - t) * t * 450 + t * t * 840;
+    var sy = (1 - t) * (1 - t) * 300 + 2 * (1 - t) * t * -120 + t * t * 300;
+    var e = Math.sin(Math.PI * t);
+    sunG.setAttribute("transform", "translate(" + sx.toFixed(1) + "," + sy.toFixed(1) + ")");
+    sunG.style.opacity = t >= 1 ? 0 : clamp(e * 3, 0, 1);
+    rays.setAttribute("transform", "rotate(" + ((now / 40) % 360).toFixed(1) + ")");
+    var day = t < 1 && e > 0.15;
+
+    var dp = seg(p, 0.25, 0.42);
+    panels.forEach(function (pn) {
+      pn.style.strokeDashoffset = 1 - dp;
+      pn.style.fill = dp < 0.98 ? "transparent" : (s >= 2 && day ? "rgba(232,163,23," + (0.08 + 0.3 * e).toFixed(2) + ")" : "rgba(16,39,45,0.06)");
+    });
+    dimv.style.opacity = s === 1 ? 1 : 0;
+    inv.classList.toggle("ghost", s < 2);
+    bat.classList.toggle("ghost", s < 3);
+
+    fl.load.classList.add("on");
+    fl.grid.classList.toggle("on", s <= 1 || (s === 2 && !day));
+    fl.pv.classList.toggle("on", s >= 2 && day);
+    fl.ac.classList.toggle("on", s >= 2 && (day || s === 3));
+    fl.bat.classList.toggle("on", s === 3);
+    fl.bat.classList.toggle("rev", s === 3 && !day);
+
+    var hr = 6 + 16 * p, hh = Math.floor(hr), mm = Math.floor((hr - hh) * 60);
+    horaHud.textContent = pad2(hh) + ":" + pad2(mm);
+    fvHud.textContent = s >= 2 && day ? Math.round(e * 100) : 0;
+  }
+  story("#solar", solar);
+
+  /* ================= Pestañas de alcance técnico ================= */
+  var tabs = $$('[role="tab"]');
+  function selectTab(tb) {
+    tabs.forEach(function (b) {
+      var on = b === tb;
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+      document.getElementById(b.getAttribute("aria-controls")).hidden = !on;
+    });
+  }
+  tabs.forEach(function (b, i) {
+    b.addEventListener("click", function () { selectTab(b); });
+    b.addEventListener("keydown", function (ev) {
+      var k = ev.key === "ArrowRight" ? 1 : ev.key === "ArrowLeft" ? -1 : 0;
+      if (!k) return;
+      var nb = tabs[(i + k + tabs.length) % tabs.length]; selectTab(nb); nb.focus();
+    });
+  });
+
+  /* ================= Aparición, contadores y orden de trabajo ================= */
+  var pending = $$("[data-rv], .shot");
+  function countUp(el) {
+    var to = +el.getAttribute("data-count"), t0 = performance.now();
+    if (reduce) { el.textContent = to; return; }
+    (function tick(n) {
+      var k = clamp((n - t0) / 1200, 0, 1);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(tick);
+    })(t0);
+  }
+  var woDone = false;
+  function runWO() {
+    if (woDone) return; woDone = true;
+    $$("#wo > div").forEach(function (d, i) { setTimeout(function () { d.classList.add("done"); }, reduce ? 0 : 500 + i * 650); });
+  }
+
+  function frame(now) {
+    var vh = window.innerHeight || 800;
+    if (pending.length) {
+      pending = pending.filter(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.height > 0 && r.top < vh * 0.9 && r.bottom > 0) {
+          el.classList.add("in");
+          $$("[data-count]", el).forEach(countUp);
+          if (el.id === "wo") runWO();
+          return false;
+        }
+        return true;
+      });
+    }
+    stories.forEach(function (o) { runStory(o, vh, now); });
+    requestAnimationFrame(frame);
+  }
+  stories.forEach(function (o) { o.update(0, 0, 0); });
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
